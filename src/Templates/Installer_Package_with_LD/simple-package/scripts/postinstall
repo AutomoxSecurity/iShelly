@@ -1,0 +1,3 @@
+#!/bin/bash
+launchctl load -w "/Library/LaunchDaemons/com.simple.agent.plist"
+exit 0
