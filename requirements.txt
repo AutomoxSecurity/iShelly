@@ -1,3 +1,5 @@
 pick
 requests
 dmgbuild
+pyyaml
+psutil
