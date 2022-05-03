@@ -45,6 +45,7 @@ def main():
         agent.build_agent(all_options)
         agent.upload_payload()
     else:
+        agent.upload_payload()
         agent.set_payload_remote_url()
 
     module = common.ModuleGenerator(agent)
