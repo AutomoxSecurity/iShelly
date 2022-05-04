@@ -287,10 +287,31 @@ class Agent:
         with open(self.full_agent_profile_settings_file, 'w') as fh:
             json.dump(self.settings, fh, indent=2)
 
+    def patch_agent(self, filepath, searchstring, content, action):
+        # action can be append or replace
+        with open(filepath, 'r') as fh:
+            contents = fh.read()
+            if action == 'replace':
+                contents = contents.replace(searchstring, content)
+            elif action == 'append':
+                content = searchstring + content
+                contents = contents.replace(searchstring, content)
+
+        with open(filepath, 'w') as fh:
+            fh.write(contents)
+        logger.debug("Patched agent file: {}".format(filepath))
+        logger.debug("with content: {}".format(content))
+
     def build_agent(self, all_options):
         my_env = os.environ.copy()
         my_env['GOOS'] = 'darwin'
         os.chdir(self.c2.payload_staging_dir)
+
+        # current workaround to https://github.com/preludeorg/pneuma/pull/115
+        self.patch_agent('util/config.go', '	"crypto/md5"\n',
+                         '	"path/filepath"\n', 'append')
+        self.patch_agent('util/config.go', '	executable, _ := os.Executable()\n',
+                         '	_ = os.Chdir(filepath.Dir(executable))\n', 'append')
 
         cmds = []
         if all_options['agent'] == 'PneumaEX' and all_options['agent-type'] == 'exe':
