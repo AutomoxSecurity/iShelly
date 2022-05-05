@@ -1,6 +1,6 @@
 {
     "PneumaEX": {
-        "supported_executables": ["exe", "dylib"],
+        "supported_executables": ["exe"],
         "outpost_filename": "pneumaEX.zip",
         "needs-compilation": true
     },
