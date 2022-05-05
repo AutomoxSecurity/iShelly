@@ -1,0 +1,12 @@
+{
+    "PneumaEX": {
+        "supported_executables": ["exe", "dylib"],
+        "outpost_filename": "pneumaEX.zip",
+        "needs-compilation": true
+    },
+    "Pneuma": {
+        "supported_executables": ["exe"],
+        "outpost_filename": "pneuma-darwin",
+        "needs-compilation": false
+    }
+}

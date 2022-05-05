@@ -3,6 +3,7 @@ import sys
 import os
 from pick import pick
 from src.modules import modules, common
+import json
 
 
 def main():
@@ -16,37 +17,19 @@ def main():
         sys.exit()
 
     os.makedirs("./Payloads/", exist_ok=True)
-    redirectors = common.get_redirectors()
-    all_options = common.get_options(redirectors)
+    all_options = common.get_options()
 
     logger.debug("Generating: {}".format(all_options['procedure']))
     c2 = common.C2(all_options)
     agent = common.Agent(c2, all_options)
 
-    payload_exists = os.path.exists(agent.payload_destination)
-    if payload_exists:
-        title = 'Payload exists. Would you like to recompile?'
-        options = [
-            'Yes',
-            'No'
-        ]
-        option, _ = pick(options, title)
-
-        if option == 'Yes':
-            all_options['recompile'] = True
-        else:
-            all_options['recompile'] = False
-
-    if not payload_exists or all_options['recompile']:
-        c2.get_payload()
+    c2.get_payload()
+    if all_options['needs-compilation']:
         c2.extract_zip()
         agent.build_operator_agent_config()
         agent.save_c2_profile_settings()
         agent.build_agent(all_options)
-        agent.upload_payload()
-    else:
-        agent.upload_payload()
-        agent.set_payload_remote_url()
+    agent.upload_payload()
 
     module = common.ModuleGenerator(agent)
     if all_options['procedure'] == 'Installer Package w/ only preinstall script':
