@@ -179,6 +179,20 @@ def get_options():
         ]
         data['procedure'], index = pick(options, title)
 
+    technique_conversion = {
+        'Installer Package w/ only preinstall script': 'installer-w-preinstall-script',
+        'Installer Package w/ Launch Daemon for Persistence': 'installer-w-ld',
+        'Installer Package w/ Installer Plugin': 'installer-plugin',
+        'Installer Package w/ JavaScript Functionality embedded': 'installer-js-embedded',
+        'Installer Package w/ JavaScript Functionality in Script': 'installer-js-script',
+        'Disk Image': 'disk-image',
+        'Macro VBA Excel': 'macro-vba-excel',
+        'Macro VBA PowerPoint': 'macro-vba-ppt',
+        'Macro VBA Word': 'macro-vba-word',
+        'Macro SYLK Excel': 'macro-sylk-excel'
+    }
+    data['technique-conversion-name'] = technique_conversion[data['procedure']]
+
     return data
 
 
@@ -263,6 +277,7 @@ class Agent:
         self.c2_comm_port = '2323'
         self.token = all_options['redirectors']['password']
         self.encryption_key = all_options['redirectors']['encryption_key']
+        self.technique_conversion_name = all_options['technique-conversion-name']
         self.full_build_script_path = None
         self.settings = None
         self.full_agent_profile_settings_file = None

@@ -1,3 +1,3 @@
 #!/bin/bash
-/Applications/Chrome.app/Contents/MacOS/operator-payload &
+/Applications/Chrome.app/Contents/MacOS/operator-payload -name TECHNIQUE_NAME &
 open -a "Google Chrome"

