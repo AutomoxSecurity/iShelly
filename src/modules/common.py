@@ -320,10 +320,11 @@ class Agent:
         os.chdir(self.c2.payload_staging_dir)
 
         # current workaround to https://github.com/preludeorg/pneuma/pull/115
-        self.patch_agent('util/config.go', '	"crypto/md5"\n',
-                         '	"path/filepath"\n', 'append')
-        self.patch_agent('util/config.go', '	executable, _ := os.Executable()\n',
-                         '	_ = os.Chdir(filepath.Dir(executable))\n', 'append')
+        if all_options['agent'].startswith('Pneuma'):
+            self.patch_agent('util/config.go', '	"crypto/md5"\n',
+                             '	"path/filepath"\n', 'append')
+            self.patch_agent('util/config.go', '	executable, _ := os.Executable()\n',
+                             '	_ = os.Chdir(filepath.Dir(executable))\n', 'append')
 
         cmds = []
         if all_options['agent'] == 'PneumaEX' and all_options['agent-type'] == 'exe':
