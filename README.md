@@ -7,6 +7,7 @@ iShelly is tool to generate macOS initial access vectors using [Prelude Operator
 Agents:
 
 - PneumaEX
+- Pneuma (supported on free Prelude Operator license!)
 
 Modules:
 
@@ -28,6 +29,13 @@ This tool will only run on macOS, since the package builders are native to macOS
 2. Launch Operator tool on macOS
 3. `pip install -r requirements`
 4. `python3 iShelly.py`
+
+# Release Notes
+
+## 1.1
+- Added a temporary patch to fix https://github.com/preludeorg/pneuma/pull/115
+- Added support for Pneuma. This means you can use iShelly on the free version of Prelude Operator
+- Added support for agent names, which are passed on the command line. This makes it easy to identify agents in Operator that are tied to a specific initial access technique. It also makes it easy for the blue team to hunt for a specific technique: use the cmdline.
 
 # Credit
 

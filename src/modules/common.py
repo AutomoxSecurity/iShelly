@@ -71,6 +71,13 @@ def get_redirectors():
     return all_redirectors
 
 
+def get_agents():
+    agent_path = os.path.join(os.getcwd(), 'src/agents.json')
+    with open(agent_path, 'r') as fh:
+        data = json.load(fh)
+    return data
+
+
 def get_logger(args):
     if args.debug:
         logging.basicConfig(
@@ -104,29 +111,33 @@ def is_running(program):
     return program in (p.name() for p in psutil.process_iter())
 
 
-def get_options(redirectors):
+def get_options():
+    redirectors = get_redirectors()
+    agents = get_agents()
+
     data = {
         'c2_name': 'operator',
         'agent': str,
         'agent-type': str,
+        'outpost-filename': str,
+        'supported-executables': list,
         'payload-type': str,
         'technique': str,
         'procedure': str,
-        'recompile': bool,
+        'needs-compilation': bool
     }
 
     title = 'Choose your payload:'
-    options = [
-        'PneumaEX'
-    ]
+    options = []
+    for agent in agents.keys():
+        options.append(agent)
     data['agent'], _ = pick(options, title)
 
-    if data['agent'] == 'PneumaEX':
-        title = 'Choose type of payload:'
-        options = [
-            'exe',
-        ]
-        data['agent-type'], _ = pick(options, title)
+    options = agents[data['agent']]['supported_executables']
+    data['agent-type'], _ = pick(options, title)
+
+    data['outpost-filename'] = agents[data['agent']]['outpost_filename']
+    data['needs-compilation'] = agents[data['agent']]['needs-compilation']
 
     title = 'IMPORTANT: if choosing a redirector, you need to first launch Operator and connect to it before proceeding!\nIMPORTANT: if choosing localhost, you\'ll need to disconnect from the redirector!\n\nChoose Redirector or localhost:'
     options = redirectors
@@ -168,6 +179,20 @@ def get_options(redirectors):
         ]
         data['procedure'], index = pick(options, title)
 
+    technique_conversion = {
+        'Installer Package w/ only preinstall script': 'installer-w-preinstall-script',
+        'Installer Package w/ Launch Daemon for Persistence': 'installer-w-ld',
+        'Installer Package w/ Installer Plugin': 'installer-plugin',
+        'Installer Package w/ JavaScript Functionality embedded': 'installer-js-embedded',
+        'Installer Package w/ JavaScript Functionality in Script': 'installer-js-script',
+        'Disk Image': 'disk-image',
+        'Macro VBA Excel': 'macro-vba-excel',
+        'Macro VBA PowerPoint': 'macro-vba-ppt',
+        'Macro VBA Word': 'macro-vba-word',
+        'Macro SYLK Excel': 'macro-sylk-excel'
+    }
+    data['technique-conversion-name'] = technique_conversion[data['procedure']]
+
     return data
 
 
@@ -177,6 +202,7 @@ class C2:
 
         self.c2_name = all_options['c2_name']
         self.agent = all_options['agent']
+        self.outpost_filename = all_options['outpost-filename']
         self.c2_comm_ip = all_options['redirectors']['host']
         self.token = all_options['redirectors']['password']
         self.session = requests.Session()
@@ -207,7 +233,7 @@ class C2:
         if self.c2_name == 'operator':
             r_json = self.rest_call('GET', self.outpost_url).json()
             for payload in r_json['payloads']:
-                if self.agent == 'PneumaEX' and payload.endswith('pneumaEX.zip'):
+                if payload.endswith(self.outpost_filename):
                     self.payload_remote_location = payload
                     break
 
@@ -251,6 +277,7 @@ class Agent:
         self.c2_comm_port = '2323'
         self.token = all_options['redirectors']['password']
         self.encryption_key = all_options['redirectors']['encryption_key']
+        self.technique_conversion_name = all_options['technique-conversion-name']
         self.full_build_script_path = None
         self.settings = None
         self.full_agent_profile_settings_file = None
@@ -287,10 +314,32 @@ class Agent:
         with open(self.full_agent_profile_settings_file, 'w') as fh:
             json.dump(self.settings, fh, indent=2)
 
+    def patch_agent(self, filepath, searchstring, content, action):
+        # action can be append or replace
+        with open(filepath, 'r') as fh:
+            contents = fh.read()
+            if action == 'replace':
+                contents = contents.replace(searchstring, content)
+            elif action == 'append':
+                content = searchstring + content
+                contents = contents.replace(searchstring, content)
+
+        with open(filepath, 'w') as fh:
+            fh.write(contents)
+        logger.debug("Patched agent file: {}".format(filepath))
+        logger.debug("with content: {}".format(content))
+
     def build_agent(self, all_options):
         my_env = os.environ.copy()
         my_env['GOOS'] = 'darwin'
         os.chdir(self.c2.payload_staging_dir)
+
+        # current workaround to https://github.com/preludeorg/pneuma/pull/115
+        if all_options['agent'].startswith('Pneuma'):
+            self.patch_agent('util/config.go', '	"crypto/md5"\n',
+                             '	"path/filepath"\n', 'append')
+            self.patch_agent('util/config.go', '	executable, _ := os.Executable()\n',
+                             '	_ = os.Chdir(filepath.Dir(executable))\n', 'append')
 
         cmds = []
         if all_options['agent'] == 'PneumaEX' and all_options['agent-type'] == 'exe':

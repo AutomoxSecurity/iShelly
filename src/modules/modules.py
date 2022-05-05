@@ -11,6 +11,10 @@ def install_pkg(module):
     module.copy_filedir(src, dst)
 
     module.make_executable('simple-package/scripts/preinstall')
+    template_file = os.path.join(
+        module.module_root_path, 'simple-package/scripts/preinstall')
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
 
     module.create_dir('simple-package/scripts/files')
     dst = os.path.join(module.module_root_path,
@@ -42,6 +46,11 @@ def install_pkg_ld(module):
     module.make_executable('simple-package/scripts/preinstall')
     module.make_executable('simple-package/scripts/postinstall')
 
+    template_file = os.path.join(
+        module.module_root_path, 'simple-package/scripts/files/com.simple.plist')
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
+
     module.create_dir('simple-package/scripts/files')
     dst = os.path.join(module.module_root_path,
                        'simple-package/scripts/files/operator-payload')
@@ -72,6 +81,8 @@ def install_pkg_installer_plugin(module):
         module.module_root_path, 'SpecialDelivery/MyInstallerPane.m')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
 
     module.run_xcodebuild()
 
@@ -117,6 +128,8 @@ def install_pkg_js_embedded(module):
     template_file = os.path.join(module.module_root_path, 'distribution.xml')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
 
     output = 'installer_js_embedded.pkg'
     module.run_pkgbuild(identifier='com.simple.agent',
@@ -143,6 +156,10 @@ def install_pkg_js_script(module):
 
     template_file = os.path.join(module.module_root_path, 'distribution.xml')
     module.update_template('templatescript', "installcheck", template_file)
+    template_file = os.path.join(
+        module.module_root_path, 'Scripts/installcheck')
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
 
     template_file = os.path.join(
         module.module_root_path, 'Scripts/installcheck')
@@ -171,7 +188,12 @@ def disk_image(module):
     dst = module.module_root_path
     module.copy_filedir(src, dst)
 
-    module.make_executable('Chrome.app/Contents/MacOS/Application Stub')
+    template_file = 'Chrome.app/Contents/MacOS/Application Stub'
+    module.make_executable(template_file)
+    template_file = os.path.join(
+        module.module_root_path, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
 
     src = '/Applications/Google Chrome.app/Contents/Resources/app.icns'
     dst = os.path.join(module.module_root_path,
@@ -206,6 +228,8 @@ def macro_vba_excel(module):
         module.module_root_path, 'macro_vba_excel.txt')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
     module.copy_filedir(template_file, os.path.join(
         module.agent.c2.payloads_dir, 'macro_vba_excel.txt'))
 
@@ -224,6 +248,8 @@ def macro_vba_ppt(module):
     template_file = os.path.join(module.module_root_path, 'macro_vba_ppt.txt')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
     module.copy_filedir(template_file, os.path.join(
         module.agent.c2.payloads_dir, 'macro_vba_ppt.txt'))
 
@@ -242,6 +268,8 @@ def macro_vba_word(module):
     template_file = os.path.join(module.module_root_path, 'macro_vba_word.txt')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
     module.copy_filedir(template_file, os.path.join(
         module.agent.c2.payloads_dir, 'macro_vba_word.txt'))
 
@@ -261,6 +289,8 @@ def macro_sylk_excel(module):
         module.module_root_path, 'macro_sylk_excel.txt')
     module.update_template('REMOTE_PAYLOAD_URL',
                            module.agent.payload_hosting_url, template_file)
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
     module.copy_filedir(template_file, os.path.join(
         module.agent.c2.payloads_dir, 'macro_sylk_excel.slk'))
 
