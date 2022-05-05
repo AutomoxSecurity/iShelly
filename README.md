@@ -1,6 +1,12 @@
 ![Logo](/assets/logo.png?raw=true)
 
-iShelly is tool to generate macOS initial access vectors using [Prelude Operator](https://www.prelude.org/) payloads
+iShelly is tool to generate macOS initial access vectors using [Prelude Operator](https://www.prelude.org/) payloads.
+
+It automates the following:
+- Compilation of Prelude Operator agents
+- Staging of payloads
+- Generation of initial access vectors on macOS. This includes various installer and disk image techniques (for a complete list, see the list of currently supported modules)
+
 
 # Currently supports:
 
