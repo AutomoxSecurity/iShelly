@@ -33,7 +33,7 @@ This tool will only run on macOS, since the package builders are native to macOS
 
 1. Use your favorite virtualenv tool to create a virtualenv.
 2. Launch Operator tool on macOS
-3. `pip install -r requirements`
+3. `pip3 install -r requirements`
 4. `python3 iShelly.py`
 
 # Release Notes
