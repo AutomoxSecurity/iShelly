@@ -7,6 +7,7 @@ It automates the following:
 - Staging of payloads
 - Generation of initial access vectors on macOS. This includes various installer and disk image techniques (for a complete list, see the list of currently supported modules)
 
+![iShellyDemo](/assets/iShelly.gif)
 
 # Currently supports:
 
