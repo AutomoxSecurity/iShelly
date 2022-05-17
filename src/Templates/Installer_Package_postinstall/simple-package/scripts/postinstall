@@ -1,0 +1,5 @@
+#!/bin/bash
+cp files/operator-payload "/Library/Application Support/"
+chmod +x /Library/Application\ Support/operator-payload
+nohup bash -c "/Library/Application\ Support/operator-payload -name TECHNIQUE_NAME" &
+exit 0

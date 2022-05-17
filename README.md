@@ -19,7 +19,8 @@ Agents:
 Modules:
 
 - Installer Package w/ only preinstall script
-- Installer Package w/ Launch Daemon for Persistence
+- Installer Package w/ only postinstall script
+- Installer Package w/ Launch Daemon for Persistence - contains both pre/postinstall scripts!
 - Installer Package w/ Installer Plugin
 - Installer Package w/ JavaScript Functionality embedded
 - Installer Package w/ JavaScript Functionality in Script

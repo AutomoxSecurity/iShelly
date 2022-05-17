@@ -34,6 +34,8 @@ def main():
     module = common.ModuleGenerator(agent)
     if all_options['procedure'] == 'Installer Package w/ only preinstall script':
         modules.install_pkg(module)
+    elif all_options['procedure'] == 'Installer Package w/ only postinstall script':
+        modules.install_pkg_postinstall(module)       
     elif all_options['procedure'] == 'Installer Package w/ Launch Daemon for Persistence':
         modules.install_pkg_ld(module)
     elif all_options['procedure'] == 'Installer Package w/ Installer Plugin':

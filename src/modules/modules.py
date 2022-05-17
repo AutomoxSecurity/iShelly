@@ -35,6 +35,39 @@ def install_pkg(module):
     module.generate_instructions(instructions)
 
 
+def install_pkg_postinstall(module):
+    module.set_scripts_dir('simple-package/scripts')
+
+    src = os.path.join(module.agent.c2.appdir,
+                       'src/Templates/Installer_Package_postinstall')
+    dst = module.module_root_path
+    module.copy_filedir(src, dst)
+
+    module.make_executable('simple-package/scripts/postinstall')
+    template_file = os.path.join(
+        module.module_root_path, 'simple-package/scripts/postinstall')
+    module.update_template('TECHNIQUE_NAME',
+                           module.agent.technique_conversion_name, template_file)
+
+    module.create_dir('simple-package/scripts/files')
+    dst = os.path.join(module.module_root_path,
+                       'simple-package/scripts/files/operator-payload')
+    module.copy_filedir(module.agent.payload_destination, dst)
+    module.make_executable('simple-package/scripts/files/operator-payload')
+
+    module.generate_payload(
+        type='pkgbuild', identifier='com.simple.test', output="install_pkg_postinstall.pkg")
+
+    cleanup = [
+        'ps aux |grep operator-payload | awk -F "  +" \'{print $2}\' | sudo xargs kill',
+        'sudo rm -f "/Library/Application Support/operator-payload"'
+    ]
+    module.generate_cleanup(cleanup)
+
+    instructions = ['Run pkg written in Payloads']
+    module.generate_instructions(instructions)
+
+
 def install_pkg_ld(module):
     module.set_scripts_dir('simple-package/scripts')
 

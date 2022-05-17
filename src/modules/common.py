@@ -163,6 +163,7 @@ def get_options():
         title = 'Choose your Installer Package option:'
         options = [
             'Installer Package w/ only preinstall script',
+            'Installer Package w/ only postinstall script',
             'Installer Package w/ Launch Daemon for Persistence',
             'Installer Package w/ Installer Plugin',
             'Installer Package w/ JavaScript Functionality embedded',
@@ -181,6 +182,7 @@ def get_options():
 
     technique_conversion = {
         'Installer Package w/ only preinstall script': 'installer-w-preinstall-script',
+        'Installer Package w/ only postinstall script': 'installer-w-postinstall-script',
         'Installer Package w/ Launch Daemon for Persistence': 'installer-w-ld',
         'Installer Package w/ Installer Plugin': 'installer-plugin',
         'Installer Package w/ JavaScript Functionality embedded': 'installer-js-embedded',
