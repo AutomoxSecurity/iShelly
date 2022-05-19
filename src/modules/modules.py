@@ -268,7 +268,8 @@ def macro_vba_excel(module):
 
     instructions = [
         'Copy the macro from Payloads/macro_vba_excel.txt to paste into Excel Workbook',
-        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Excel/Data/operator-payload"'
+        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Excel/Data/operator-payload"',
+        'Note: if Office for Mac 2016 or higher is used, the Apple Sandbox pay prevent this technique from working.'
     ]
     module.generate_instructions(instructions)
 
@@ -288,7 +289,8 @@ def macro_vba_ppt(module):
 
     instructions = [
         'Copy the macro from Payloads/macro_vba_ppt.txt to paste into Powerpoint',
-        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Powerpoint/Data/operator-payload"'
+        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Powerpoint/Data/operator-payload"',
+        'Note: if Office for Mac 2016 or higher is used, the Apple Sandbox pay prevent this technique from working.'
     ]
     module.generate_instructions(instructions)
 
@@ -308,7 +310,8 @@ def macro_vba_word(module):
 
     instructions = [
         'Copy the macro from Payloads/macro_vba_word.txt to past into Word Doc',
-        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Word/Data/operator-payload"'
+        'When the macro is executed it will save to ~/Library/Containers/com.microsoft.Word/Data/operator-payload"',
+        'Note: if Office for Mac 2016 or higher is used, the Apple Sandbox pay prevent this technique from working.'
     ]
     module.generate_instructions(instructions)
 
@@ -329,6 +332,7 @@ def macro_sylk_excel(module):
 
     instructions = [
         'Double click on the Payloads/macro_sylk_excel.slk file.',
-        'Excel should open the file, and prompt user to enable macros."'
+        'Excel should open the file, and prompt user to enable macros."',
+        'Note: if Office for Mac 2016 or higher is used, the Apple Sandbox pay prevent this technique from working.'
     ]
     module.generate_instructions(instructions)
