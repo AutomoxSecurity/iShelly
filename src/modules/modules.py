@@ -328,7 +328,7 @@ def macro_sylk_excel(module):
         module.agent.c2.payloads_dir, 'macro_sylk_excel.slk'))
 
     instructions = [
-        'Copy the macro from Payloads/macro_sylk_excel.slk',
-        'Double click."'
+        'Double click on the Payloads/macro_sylk_excel.slk file.',
+        'Excel should open the file, and prompt user to enable macros."'
     ]
     module.generate_instructions(instructions)
