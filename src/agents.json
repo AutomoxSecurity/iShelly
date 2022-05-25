@@ -1,7 +1,7 @@
 {
     "PneumaEX": {
         "supported_executables": ["exe"],
-        "outpost_filename": "pneumaEX.zip",
+        "outpost_filename": "pneumaEX/v1.6/pneumaEX.zip",
         "needs-compilation": true
     },
     "Pneuma": {
